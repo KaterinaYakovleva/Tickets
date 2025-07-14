@@ -2,35 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Aircraft", {
+    await queryInterface.createTable("Payments", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      airline_id: {
+      booking_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Airlines",
+          model: "Bookings",
           key: "id",
         },
+        unique: true,
       },
-      model: {
+      amount: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      payment_method: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      seats_capacity: {
-        allowNull: false,
+      transaction_id: {
         type: Sequelize.INTEGER,
       },
-      seats_economy: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      seats_business: {
-        type: Sequelize.INTEGER,
+      status: {
+        defaultValue: "pending",
+        type: Sequelize.STRING,
       },
       createdAt: {
         defaultValue: new Date(),
@@ -45,6 +46,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Aircraft');
+    await queryInterface.dropTable('Payments');
   }
 };

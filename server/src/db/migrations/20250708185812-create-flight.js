@@ -2,57 +2,87 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Flights', {
+    await queryInterface.createTable("Flights", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       flight_number: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       airline_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Airlines",
+          key: "id",
+        },
       },
       aircraft_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Aircraft",
+          key: "id",
+        },
       },
       departure_airport_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Airports",
+          key: "id",
+        },
       },
       arrival_airport_id: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Airports",
+          key: "id",
+        },
       },
       departure_time: {
-        type: Sequelize.TIME
+        allowNull: false,
+        type: Sequelize.TIME,
       },
       arrival_time: {
-        type: Sequelize.TIME
+        allowNull: false,
+        type: Sequelize.TIME,
       },
       duration: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       economy_price: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       business_price: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       available_seats: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       status: {
-        type: Sequelize.STRING
+        defaultValue: "scheduled",
+        type: Sequelize.STRING,
       },
       createdAt: {
+        defaultValue: new Date(),
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
       },
       updatedAt: {
+        defaultValue: new Date(),
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
